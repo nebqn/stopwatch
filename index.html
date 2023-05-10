@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <?php
+$file = 'counter.txt';
+
+// Open the file for reading and writing
+$handle = fopen($file, 'r+');
+
+// Lock the file for writing
+flock($handle, LOCK_EX);
+
+// Read the current count from the file
+$count = fgets($handle);
+
+// Increment the count
+$count++;
+
+// Write the new count to the file
+fseek($handle, 0);
+fwrite($handle, $count);
+
+// Release the lock and close the file
+flock($handle, LOCK_UN);
+fclose($handle);
+?>
+
+  <head>
+    <title>Stopwatch</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Stopwatch</h1>
+      <div class="stopwatch">
+        <h2 id="display">00:00:00</h2>
+        <button id="startstop" class="btn">Start</button>
+        <button id="reset" class="btn">Reset</button>
+        <div id="log"></div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
